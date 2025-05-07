@@ -13,10 +13,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+const ITEMS_PER_PAGE = 10;
 
 const ResultsTable = ({ queries }: ResultsTableProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<"all" | "suspicious" | "benign">("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredQueries = useMemo(() => {
     return queries.filter(query => {
@@ -28,6 +39,17 @@ const ResultsTable = ({ queries }: ResultsTableProps) => {
       return matchesSearch && matchesFilter;
     });
   }, [queries, searchTerm, filter]);
+
+  const totalPages = Math.ceil(filteredQueries.length / ITEMS_PER_PAGE);
+  
+  const paginatedQueries = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredQueries.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredQueries, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="w-full dns-card overflow-hidden">
@@ -103,8 +125,8 @@ const ResultsTable = ({ queries }: ResultsTableProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredQueries.length > 0 ? (
-              filteredQueries.map((query) => (
+            {paginatedQueries.length > 0 ? (
+              paginatedQueries.map((query) => (
                 <TableRow key={query.id} className="hover:bg-gray-50">
                   <TableCell className="font-medium max-w-[200px] truncate">
                     {query.domain}
@@ -153,6 +175,58 @@ const ResultsTable = ({ queries }: ResultsTableProps) => {
           </TableBody>
         </Table>
       </div>
+      
+      {filteredQueries.length > 0 && (
+        <div className="py-4 border-t">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious 
+                  onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                  className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                />
+              </PaginationItem>
+              
+              {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
+                let pageNumber: number;
+                
+                // Calculate page number based on current page
+                if (totalPages <= 5) {
+                  pageNumber = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNumber = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNumber = totalPages - 4 + i;
+                } else {
+                  pageNumber = currentPage - 2 + i;
+                }
+                
+                // Only render if page number is valid
+                if (pageNumber > 0 && pageNumber <= totalPages) {
+                  return (
+                    <PaginationItem key={pageNumber}>
+                      <PaginationLink 
+                        isActive={pageNumber === currentPage}
+                        onClick={() => handlePageChange(pageNumber)}
+                      >
+                        {pageNumber}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
+                return null;
+              })}
+              
+              <PaginationItem>
+                <PaginationNext 
+                  onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+                  className={currentPage >= totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 };

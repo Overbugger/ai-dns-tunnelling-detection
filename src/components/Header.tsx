@@ -28,11 +28,11 @@ const Header = () => {
             <Link to="/" className="text-gray-700 hover:text-dns-primary font-medium transition-colors">
               Dashboard
             </Link>
-            <Link to="/results" className="text-gray-700 hover:text-dns-primary font-medium transition-colors">
-              Analysis Results
+            <Link to="/docs" className="text-gray-700 hover:text-dns-primary font-medium transition-colors">
+              Docs
             </Link>
             <Link to="/about" className="text-gray-700 hover:text-dns-primary font-medium transition-colors">
-              About AI Model
+              About
             </Link>
           </nav>
         )}
@@ -63,18 +63,18 @@ const Header = () => {
               Dashboard
             </Link>
             <Link 
-              to="/results" 
+              to="/docs" 
               className="text-gray-700 hover:text-dns-primary font-medium transition-colors px-2 py-1.5 rounded-md hover:bg-gray-100"
               onClick={() => setIsMenuOpen(false)}
             >
-              Analysis Results
+              Docs
             </Link>
             <Link 
               to="/about" 
               className="text-gray-700 hover:text-dns-primary font-medium transition-colors px-2 py-1.5 rounded-md hover:bg-gray-100"
               onClick={() => setIsMenuOpen(false)}
             >
-              About AI Model
+              About
             </Link>
           </nav>
         </div>
