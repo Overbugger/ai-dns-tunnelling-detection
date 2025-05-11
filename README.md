@@ -1,73 +1,113 @@
-# Welcome to your Lovable project
+# AI DNS Tunneling Detection
 
-## Project info
+An intelligent DNS traffic analyzer that uses machine learning to detect potential DNS tunneling attacks in network traffic.
 
-**URL**: https://lovable.dev/projects/7d55e872-54a3-4c3a-a735-1e91b9581b33
+## Features
 
-## How can I edit this code?
+- Upload and analyze PCAP/CSV files containing DNS queries
+- AI-powered detection of suspicious DNS patterns
+- Real-time analysis with visual feedback
+- Detailed results with query-level information
+- Filter and sort capabilities for investigation
+- Responsive design for desktop and mobile
+- Dark mode support
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+This project is built with modern web technologies:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7d55e872-54a3-4c3a-a735-1e91b9581b33) and start prompting.
+- **Frontend Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **State Management**: React Hooks
+- **Data Tables**: TanStack Table
+- **Toast Notifications**: React Toast
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js (v18.17.0 or higher)
+- npm (v9.0.0 or higher)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Clone the repository
+git clone https://github.com/yourusername/ai-dns-tunnelling-detection.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to project directory
+cd ai-dns-tunnelling-detection
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Usage
 
-**Use GitHub Codespaces**
+1. Launch the application
+2. Upload a PCAP or CSV file containing DNS queries
+3. Click "Run AI Analysis" to start the detection process
+4. Review the results in the interactive dashboard
+5. Use filters and sorting to investigate suspicious queries
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## File Requirements
 
-## What technologies are used for this project?
+- Supported formats: `.pcap`, `.csv`
+- Maximum file size: 50MB
+- Required columns for CSV:
+  - domain
+  - query_type
+  - timestamp
 
-This project is built with:
+## Local Development
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```sh
+# Install dependencies
+npm install
 
-## How can I deploy this project?
+# Run development server
+npm run dev
 
-Simply open [Lovable](https://lovable.dev/projects/7d55e872-54a3-4c3a-a735-1e91b9581b33) and click on Share -> Publish.
+# Build for production
+npm run build
 
-## Can I connect a custom domain to my Lovable project?
+# Preview production build
+npm run preview
+```
 
-Yes, you can!
+## Project Structure
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+src/
+├── components/         # Reusable UI components
+├── hooks/             # Custom React hooks
+├── pages/             # Page components
+├── types/             # TypeScript interfaces
+├── utils/             # Helper functions
+└── styles/            # Global styles
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Built with [shadcn/ui](https://ui.shadcn.com/)
+- DNS analysis techniques based on current security research
+- Inspired by real-world DNS tunneling detection systems

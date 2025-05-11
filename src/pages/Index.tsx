@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
@@ -6,7 +5,7 @@ import FileUpload from "@/components/FileUpload";
 import AnalysisLoading from "@/components/AnalysisLoading";
 import ResultsSummary from "@/components/ResultsSummary";
 import ResultsTable from "@/components/ResultsTable";
-import { simulateAnalysis } from "@/utils/analysisUtils";
+import { simulateAnalysis, validateFile } from "@/utils/analysisUtils";
 import { AnalysisResult } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
@@ -32,14 +31,25 @@ const Index = () => {
       return;
     }
 
+    // Validate file before processing
+    const validation = validateFile(file);
+    if (!validation.valid) {
+      toast({
+        title: "Invalid File",
+        description: validation.error,
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       setIsAnalyzing(true);
-      
+
       // Simulate AI analysis
       const analysisResults = await simulateAnalysis(4000); // 4 seconds delay
-      
+
       setResults(analysisResults);
-      
+
       toast({
         title: "Analysis Complete",
         description: `Analyzed ${analysisResults.totalQueries} DNS queries with ${analysisResults.suspiciousQueries} suspicious entries detected.`,
@@ -59,7 +69,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
-      
+
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto">
           {/* Hero Section */}
@@ -68,10 +78,11 @@ const Index = () => {
               AI DNS Tunneling Detection
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Powered by Machine Learning. Detect DNS-based threats intelligently.
+              Powered by Machine Learning. Detect DNS-based threats
+              intelligently.
             </p>
           </div>
-          
+
           {/* Main Content */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             {isAnalyzing ? (
@@ -84,7 +95,7 @@ const Index = () => {
                     isUploading={isAnalyzing}
                   />
                 </div>
-                
+
                 <div className="flex justify-center">
                   <Button
                     className="dns-primary-button py-2 px-6"
@@ -95,7 +106,7 @@ const Index = () => {
                     Run AI Analysis
                   </Button>
                 </div>
-                
+
                 <div className="flex items-center justify-center text-sm text-gray-500 space-x-2">
                   <div className="w-8 h-px bg-gray-200"></div>
                   <span>Supported formats: .pcap and .csv</span>
@@ -105,7 +116,9 @@ const Index = () => {
             ) : (
               <div className="p-6 space-y-8">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-semibold text-gray-900">Analysis Results</h2>
+                  <h2 className="text-2xl font-semibold text-gray-900">
+                    Analysis Results
+                  </h2>
                   <Button
                     variant="outline"
                     onClick={() => {
@@ -116,16 +129,16 @@ const Index = () => {
                     New Analysis
                   </Button>
                 </div>
-                
+
                 <ResultsSummary results={results} />
-                
+
                 <ResultsTable queries={results.queries} />
               </div>
             )}
           </div>
         </div>
       </main>
-      
+
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 mt-auto">
         <div className="container mx-auto px-4 py-6">
