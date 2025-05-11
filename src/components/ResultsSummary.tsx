@@ -79,9 +79,9 @@ const ResultsSummary = ({ results }: ResultsSummaryProps) => {
             </div>
           </div>
           
-          <div className="text-sm text-gray-500 bg-dns-primary/5 p-4 rounded-lg border border-dns-primary/10">
+          {/* <div className="text-sm text-gray-500 bg-dns-primary/5 p-4 rounded-lg border border-dns-primary/10">
             <p>Analysis performed using a Random Forest model trained on real-world DNS traffic. The model has been optimized for high precision to minimize false positives in tunneling detection.</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
